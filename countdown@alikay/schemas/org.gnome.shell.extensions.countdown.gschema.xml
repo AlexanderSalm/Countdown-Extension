@@ -17,5 +17,8 @@
     <key name="show-days" type="b">
       <default>true</default>
     </key>
+    <key name="text" type="s">
+      <default>"Countdown"</default>
+  </key>
   </schema>
 </schemalist>

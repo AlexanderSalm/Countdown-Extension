@@ -25,6 +25,7 @@ class Extension {
         log('show-min : ' + this.settings.get_boolean('show-min'));
         log('show-hour: ' + this.settings.get_boolean('show-hour'));
         log('show-days: ' + this.settings.get_boolean('show-days'));
+        log('text     : ' + this.settings.get_string('text'));
 
         let indicatorName = `${Me.metadata.name} Indicator`;
         
@@ -33,7 +34,7 @@ class Extension {
         });
 
         this.text = new St.Label({
-            text : "Hello World",
+            text : this.settings.get_string('text'),
             y_align: Clutter.ActorAlign.CENTER,
         });
         this.button.set_child(this.text);

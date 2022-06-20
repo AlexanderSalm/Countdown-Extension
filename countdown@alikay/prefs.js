@@ -16,12 +16,31 @@ function fillPreferencesWindow(window) {
     
     // Create a preferences page and group
     const page = new Adw.PreferencesPage();
-    const group = new Adw.PreferencesGroup();
-    page.add(group);
+    const group0 = new Adw.PreferencesGroup();
+    page.add(group0);
+
+    //Create a text entry field
+    const row0 = new Adw.ActionRow({ title: 'Text' });
+    group0.add(row0);
+
+    //Create text entry field
+    const text = new Gtk.Entry({
+
+    });
+    settings.bind(
+      'text',
+      text,
+      'active',
+      Gio.SettingsBindFlags.DEFAULT
+    );
+
+    //------------------------------------------------------
+    const group1 = new Adw.PreferencesGroup();
+    page.add(group1);
 
     // Create a new preferences row
     const row1 = new Adw.ActionRow({ title: 'Show Milliseconds' });
-    group.add(row1);
+    group1.add(row1);
 
     // Create the switch and bind its value to the `show-indicator` key
     const toggle1 = new Gtk.Switch({
@@ -37,7 +56,7 @@ function fillPreferencesWindow(window) {
 
     // Create a new preferences row
     const row2 = new Adw.ActionRow({ title: 'Show Seconds' });
-    group.add(row2);
+    group1.add(row2);
 
     // Create the switch and bind its value to the `show-indicator` key
     const toggle2 = new Gtk.Switch({
@@ -53,7 +72,7 @@ function fillPreferencesWindow(window) {
 
     // Create a new preferences row
     const row3 = new Adw.ActionRow({ title: 'Show Minutes' });
-    group.add(row3);
+    group1.add(row3);
 
     // Create the switch and bind its value to the `show-indicator` key
     const toggle3 = new Gtk.Switch({
@@ -69,7 +88,7 @@ function fillPreferencesWindow(window) {
 
     // Create a new preferences row
     const row4 = new Adw.ActionRow({ title: 'Show Hours' });
-    group.add(row4);
+    group1.add(row4);
 
     // Create the switch and bind its value to the `show-indicator` key
     const toggle4 = new Gtk.Switch({
@@ -85,7 +104,7 @@ function fillPreferencesWindow(window) {
 
     // Create a new preferences row
     const row5 = new Adw.ActionRow({ title: 'Show Days' });
-    group.add(row5);
+    group1.add(row5);
 
     // Create the switch and bind its value to the `show-indicator` key
     const toggle5 = new Gtk.Switch({
@@ -98,6 +117,8 @@ function fillPreferencesWindow(window) {
         'active',
         Gio.SettingsBindFlags.DEFAULT
     );
+
+
 
     // Add the switch to the row
     row1.add_suffix(toggle1);
