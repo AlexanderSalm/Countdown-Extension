@@ -3,6 +3,18 @@
   <schema id="org.gnome.shell.extensions.countdown@alikay" path="/org/gnome/shell/extensions/countdown@alikay/">
     <!-- See also: https://docs.gtk.org/glib/gvariant-format-strings.html -->
     <key name="show-msec" type="b">
+      <default>false</default>
+    </key>
+    <key name="show-sec" type="b">
+      <default>false</default>
+    </key>
+    <key name="show-min" type="b">
+      <default>false</default>
+    </key>
+    <key name="show-hour" type="b">
+      <default>true</default>
+    </key>
+    <key name="show-days" type="b">
       <default>true</default>
     </key>
   </schema>

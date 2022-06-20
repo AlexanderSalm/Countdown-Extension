@@ -21,6 +21,10 @@ class Extension {
 
         log(`enabling ${Me.metadata.name}`);
         log('show-msec: ' + this.settings.get_boolean('show-msec'));
+        log('show-sec : ' + this.settings.get_boolean('show-sec'));
+        log('show-min : ' + this.settings.get_boolean('show-min'));
+        log('show-hour: ' + this.settings.get_boolean('show-hour'));
+        log('show-days: ' + this.settings.get_boolean('show-days'));
 
         let indicatorName = `${Me.metadata.name} Indicator`;
         
