@@ -20,16 +20,16 @@ function fillPreferencesWindow(window) {
     page.add(group);
 
     // Create a new preferences row
-    const row = new Adw.ActionRow({ title: 'Show Extension Indicator' });
+    const row = new Adw.ActionRow({ title: 'Show Milliseconds' });
     group.add(row);
 
     // Create the switch and bind its value to the `show-indicator` key
     const toggle = new Gtk.Switch({
-        active: settings.get_boolean ('show-indicator'),
+        active: settings.get_boolean ('show-msec'),
         valign: Gtk.Align.CENTER,
     });
     settings.bind(
-        'show-indicator',
+        'show-msec',
         toggle,
         'active',
         Gio.SettingsBindFlags.DEFAULT

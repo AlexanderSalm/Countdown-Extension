@@ -1,5 +1,6 @@
 const Gio = imports.gi.Gio;
 const St = imports.gi.St;
+const Clutter = imports.gi.Clutter;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
@@ -9,17 +10,31 @@ const PanelMenu = imports.ui.panelMenu;
 
 class Extension {
     constructor() {
-        this._indicator = null;
+        this.button = null;
+        this.text = null;
+        this.settings = null;
     }
     
     enable() {
-        log(`enabling ${Me.metadata.name}`);
-
         this.settings = ExtensionUtils.getSettings(
             'org.gnome.shell.extensions.countdown@alikay');
 
+        log(`enabling ${Me.metadata.name}`);
+        log('show-msec: ' + this.settings.get_boolean('show-msec'));
+
         let indicatorName = `${Me.metadata.name} Indicator`;
         
+        this.button = new St.Bin({
+            style_class : "panel-button",
+        });
+
+        this.text = new St.Label({
+            text : "Hello World",
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        this.button.set_child(this.text);
+
+        /*
         // Create a panel button
         this._indicator = new PanelMenu.Button(0.0, indicatorName, false);
         
@@ -40,15 +55,20 @@ class Extension {
             'visible',
             Gio.SettingsBindFlags.DEFAULT
         );
+        */
 
-        Main.panel.addToStatusArea(indicatorName, this._indicator);
+        //Main.panel.addToStatusArea(indicatorName, this.button);
+
+        Main.panel._rightBox.insert_child_at_index(this.button, 0);
     }
     
     disable() {
         log(`disabling ${Me.metadata.name}`);
 
-        this._indicator.destroy();
-        this._indicator = null;
+        this.text.destroy();
+        this.button.destroy();
+        this.button = null;
+        this.text = null;
     }
 }
 
