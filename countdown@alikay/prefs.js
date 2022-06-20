@@ -1,48 +1,44 @@
-const GObject = imports.gi.GObject;
-const Gtk = imports.gi.Gtk;
+'use strict';
 
-function init () {}
+const { Adw, Gio, Gtk } = imports.gi;
 
-function buildPrefsWidget () {
-  let widget = new MyPrefsWidget();
-  widget.show_all();
-  return widget;
+const ExtensionUtils = imports.misc.extensionUtils;
+const Me = ExtensionUtils.getCurrentExtension();
+
+
+function init() {
 }
 
-const MyPrefsWidget = GObject.registerClass(
-class MyPrefsWidget extends Gtk.Box {
+function fillPreferencesWindow(window) {
+    // Use the same GSettings schema as in `extension.js`
+    const settings = ExtensionUtils.getSettings(
+        'org.gnome.shell.extensions.countdown@alikay');
+    
+    // Create a preferences page and group
+    const page = new Adw.PreferencesPage();
+    const group = new Adw.PreferencesGroup();
+    page.add(group);
 
-  _init (params) {
+    // Create a new preferences row
+    const row = new Adw.ActionRow({ title: 'Show Extension Indicator' });
+    group.add(row);
 
-    super._init(params);
-
-    this.margin = 20;
-    this.set_spacing(15);
-    this.set_orientation(Gtk.Orientation.VERTICAL);
-
-    this.connect('destroy', Gtk.main_quit);
-
-    let myLabel = new Gtk.Label({
-      label : "Translated Text"    
+    // Create the switch and bind its value to the `show-indicator` key
+    const toggle = new Gtk.Switch({
+        active: settings.get_boolean ('show-indicator'),
+        valign: Gtk.Align.CENTER,
     });
+    settings.bind(
+        'show-indicator',
+        toggle,
+        'active',
+        Gio.SettingsBindFlags.DEFAULT
+    );
 
-    let spinButton = new Gtk.SpinButton();
-    spinButton.set_sensitive(true);
-    spinButton.set_range(-60, 60);
-    spinButton.set_value(0);
-    spinButton.set_increments(1, 2);
+    // Add the switch to the row
+    row.add_suffix(toggle);
+    row.activatable_widget = toggle;
 
-    spinButton.connect("value-changed", function (w) {
-      log(w.get_value_as_int());
-    });
-
-    let hBox = new Gtk.Box();
-    hBox.set_orientation(Gtk.Orientation.HORIZONTAL);
-
-    hBox.pack_start(myLabel, false, false, 0);
-    hBox.pack_end(spinButton, false, false, 0);
-
-    this.add(hBox);
-  }
-
-});
+    // Add our page to the window
+    window.add(page);
+}
