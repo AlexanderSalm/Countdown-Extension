@@ -12,7 +12,9 @@ const Util = imports.misc.util;
 class Extension {
     constructor() {
         this.button = null;
+        this.indicators = null;
         this.text = null;
+        this.time = null;
         this.settings = null;
     }
     
@@ -40,11 +42,18 @@ class Extension {
         
         // Create a panel button
         this.button = new PanelMenu.Button(0.0, "Countdown!", false);
+        this.indicators = new St.BoxLayout({style_class: 'panel-status-indicators-box'});
         this.text = new St.Label({
             text : this.settings.get_string('text'),
             y_align: Clutter.ActorAlign.CENTER,
         });
-        this.button.add_child(this.text);
+        this.time = new St.Label({
+            text : "TIME",
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        this.button.add_child(this.indicators);
+        this.indicators.add_child(this.text);
+        this.indicators.add_child(this.time);
         
         this.button.connect("button-press-event", this.onClick.bind(this));
         
@@ -84,7 +93,9 @@ class Extension {
 
         this.text.destroy();
         this.button.destroy();
+        this.time.destroy();
         this.button = null;
+        this.time = null;
         this.text = null;
     }
     
