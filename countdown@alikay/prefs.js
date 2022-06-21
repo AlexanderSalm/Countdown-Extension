@@ -30,7 +30,7 @@ function fillPreferencesWindow(window) {
     settings.bind(
       'text',
       text,
-      'active',
+      'text',
       Gio.SettingsBindFlags.DEFAULT
     );
 

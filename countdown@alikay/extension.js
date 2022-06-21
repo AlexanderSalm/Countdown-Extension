@@ -29,42 +29,51 @@ class Extension {
 
         let indicatorName = `${Me.metadata.name} Indicator`;
         
+        /*
         this.button = new St.Bin({
             style_class : "panel-button",
         });
 
+        
+        */
+        
+        // Create a panel button
+        this.button = new PanelMenu.Button(0.0, "Countdown!", false);
         this.text = new St.Label({
             text : this.settings.get_string('text'),
             y_align: Clutter.ActorAlign.CENTER,
         });
-        this.button.set_child(this.text);
-
-        /*
-        // Create a panel button
-        this._indicator = new PanelMenu.Button(0.0, indicatorName, false);
+        this.button.add_child(this.text);
+        
+        this.settings.bind(
+            'text',
+            this.text,
+            'text',
+            Gio.SettingsBindFlags.DEFAULT
+        );
         
         // Add an icon
-        let icon = new St.Icon({
-            gicon: new Gio.ThemedIcon({name: 'face-laugh-symbolic'}),
-            style_class: 'system-status-icon'
-        });
-        this._indicator.add_child(icon);
+        //let icon = new St.Icon({
+        //    gicon: new Gio.ThemedIcon({name: 'face-laugh-symbolic'}),
+        //    style_class: 'system-status-icon'
+        //});
+        //this._indicator.add_child(icon);
 
         // Bind our indicator visibility to the GSettings value
         //
         // NOTE: Binding properties only works with GProperties (properties
         // registered on a GObject class), not native JavaScript properties
-        this.settings.bind(
-            'show-indicator',
-            this._indicator,
-            'visible',
-            Gio.SettingsBindFlags.DEFAULT
-        );
-        */
+        //this.settings.bind(
+        //    'show-indicator',
+        //    this._indicator,
+        //    'visible',
+        //    Gio.SettingsBindFlags.DEFAULT
+        //);
+        
 
-        //Main.panel.addToStatusArea(indicatorName, this.button);
+        Main.panel.addToStatusArea(indicatorName, this.button);
 
-        Main.panel._rightBox.insert_child_at_index(this.button, 0);
+        //Main.panel._rightBox.insert_child_at_index(this.button, 0);
     }
     
     disable() {
