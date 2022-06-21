@@ -6,6 +6,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
+const Util = imports.misc.util;
 
 
 class Extension {
@@ -44,6 +45,8 @@ class Extension {
             y_align: Clutter.ActorAlign.CENTER,
         });
         this.button.add_child(this.text);
+        
+        this.button.connect("button-press-event", this.onClick.bind(this));
         
         this.settings.bind(
             'text',
@@ -84,6 +87,11 @@ class Extension {
         this.button = null;
         this.text = null;
     }
+    
+    //Called when the countdown button is pressed
+    onClick(){
+        Util.spawnCommandLine("gnome-extensions prefs countdown@alikay");
+    }
 }
 
 
@@ -92,4 +100,6 @@ function init() {
     
     return new Extension();
 }
+
+
 
