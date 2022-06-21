@@ -118,7 +118,9 @@ function fillPreferencesWindow(window) {
         Gio.SettingsBindFlags.DEFAULT
     );
 
-
+    //Add the entry to the row
+    row0.add_suffix(text);
+    row0.activatable_widget = text;
 
     // Add the switch to the row
     row1.add_suffix(toggle1);
