@@ -10,7 +10,6 @@ const Util = imports.misc.util;
 const Glib = imports.gi.GLib;
 const Mainloop = imports.mainloop;
 
-
 class Extension {
     constructor() {
         this.button = null;
@@ -32,6 +31,7 @@ class Extension {
         log('show-hour: ' + this.settings.get_boolean('show-hour'));
         log('show-days: ' + this.settings.get_boolean('show-days'));
         log('text     : ' + this.settings.get_string('text'));
+        log('update-frequency: ' + this.settings.get_double('update-frequency'));
 
         let indicatorName = `${Me.metadata.name} Indicator`;
         
@@ -65,12 +65,7 @@ class Extension {
 
         //Main.panel._rightBox.insert_child_at_index(this.button, 0);
         
-        //register the update loop
-        this.timeout = Mainloop.timeout_add_seconds(2.5, () => {
-          // this function will be called every 2.5 seconds
-          this.update();
-          
-        });
+        this.update();
         
     }
     
@@ -90,7 +85,7 @@ class Extension {
     }
     
     update(){
-        this.timeout = Mainloop.timeout_add_seconds(2.5, this.update.bind(this));
+        this.timeout = Mainloop.timeout_add_seconds(this.settings.get_double('update-frequency'), this.update.bind(this));
         log("Update");
         let now = Glib.DateTime.new_now_local();
         let nowString = now.format("%Y-%m-%d %H:%M:%S");

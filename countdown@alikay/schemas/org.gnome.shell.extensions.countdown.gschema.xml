@@ -19,6 +19,9 @@
     </key>
     <key name="text" type="s">
       <default>"Countdown"</default>
-  </key>
+    </key>
+    <key name="update-frequency" type="d">
+      <default>2.0</default>
+    </key>
   </schema>
 </schemalist>

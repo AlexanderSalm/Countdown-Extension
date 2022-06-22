@@ -27,14 +27,31 @@ function fillPreferencesWindow(window) {
     const text = new Gtk.Entry({
 
     });
-    settings.bind(
-      'text',
-      text,
-      'text',
-      Gio.SettingsBindFlags.DEFAULT
-    );
+    settings.bind('text', text, 'text', Gio.SettingsBindFlags.DEFAULT);
 
     //------------------------------------------------------
+    
+    const updateGroup = new Adw.PreferencesGroup();
+    page.add(updateGroup);
+
+    //Create a text entry field
+    const updateTimeRow = new Adw.ActionRow({ title: 'Time between updates (in seconds)' });
+    updateGroup.add(updateTimeRow);
+
+    //Create text entry field
+    const updateFrequency = new Gtk.SpinButton({
+        adjustment: new Gtk.Adjustment({
+            lower: 1,
+            upper: 20000,
+            step_increment: 1
+        })
+    });
+    
+    settings.bind('update-frequency', updateFrequency, 'value', Gio.SettingsBindFlags.DEFAULT);
+
+    //------------------------------------------------------------
+    
+    
     const group1 = new Adw.PreferencesGroup();
     page.add(group1);
 
@@ -121,6 +138,10 @@ function fillPreferencesWindow(window) {
     //Add the entry to the row
     row0.add_suffix(text);
     row0.activatable_widget = text;
+    
+    //Add the time spinner to the row
+    updateTimeRow.add_suffix(updateFrequency);
+    updateTimeRow.activatable_widget = updateFrequency;
 
     // Add the switch to the row
     row1.add_suffix(toggle1);
