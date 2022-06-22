@@ -94,8 +94,16 @@ class Extension {
     update(){
         this.timeout = Mainloop.timeout_add_seconds(this.settings.get_double('update-frequency'), this.update.bind(this));
         let now = Glib.DateTime.new_now_local();
-        let nowString = now.format("%Y-%m-%d %H:%M:%S");
-        this.time.text = nowString;
+        
+        const second = this.settings.get_double('target-second');
+        const minute  = this.settings.get_double('target-minute');
+        const hour    = this.settings.get_double('target-hour');
+        const day     = this.settings.get_double('target-day');
+        const month   = this.settings.get_double('target-month') + 1;
+        const year    = this.settings.get_double('target-year');
+        
+        let target = Glib.DateTime.new_local(year, month, day, hour, minute, second);
+        this.time.text = (target.to_unix() - now.to_unix()).toString();
     }
     
     //Called when the countdown button is pressed
