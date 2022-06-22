@@ -103,21 +103,41 @@ class Extension {
         const year    = this.settings.get_double('target-year');
         
         let target = Glib.DateTime.new_local(year, month, day, hour, minute, second);
-        this.time.text = (target.to_unix() - now.to_unix()).toString();
+        let diff = target.to_unix() - now.to_unix();
+        this.time.text = this.ConvertSecToDay(diff).toString();
     }
     
     //Called when the countdown button is pressed
     onClick(){
         Util.spawnCommandLine("gnome-extensions prefs countdown@alikay");
     }
-}
+    
+    ConvertSecToDay(n) {
+        var day = n / (24 * 3600);
 
+        n = n % (24 * 3600);
+        var hour = n / 3600;
+
+        n %= 3600;
+        var minutes = n / 60;
+
+        n %= 60;
+        var seconds = n;
+
+        let ret = (Math.floor(day) + " " + "days " + Math.floor(hour) + " " + "hours "
+                + Math.floor(minutes) + " " + "minutes " +
+                Math.floor(seconds) + " " + "seconds ").toString();
+        return ret;
+    }
+}
 
 function init() {
     log(`initializing ${Me.metadata.name}`);
     
     return new Extension();
 }
+
+
 
 
 
