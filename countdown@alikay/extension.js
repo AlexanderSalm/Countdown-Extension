@@ -32,6 +32,13 @@ class Extension {
         log('show-days: ' + this.settings.get_boolean('show-days'));
         log('text     : ' + this.settings.get_string('text'));
         log('update-frequency: ' + this.settings.get_double('update-frequency'));
+        
+        log('target-second: ' + this.settings.get_double('target-second'));
+        log('target-minute: ' + this.settings.get_double('target-minute'));
+        log('target-hour: '   + this.settings.get_double('target-hour'));
+        log('target-day: '    + this.settings.get_double('target-day'));
+        log('target-month: '  + this.settings.get_double('target-month'));
+        log('target-year: '   + this.settings.get_double('target-year'));
 
         let indicatorName = `${Me.metadata.name} Indicator`;
         
@@ -86,7 +93,6 @@ class Extension {
     
     update(){
         this.timeout = Mainloop.timeout_add_seconds(this.settings.get_double('update-frequency'), this.update.bind(this));
-        log("Update");
         let now = Glib.DateTime.new_now_local();
         let nowString = now.format("%Y-%m-%d %H:%M:%S");
         this.time.text = nowString;

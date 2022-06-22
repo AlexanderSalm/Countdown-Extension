@@ -23,5 +23,24 @@
     <key name="update-frequency" type="d">
       <default>2.0</default>
     </key>
+    
+    <key name="target-hour" type="d">
+      <default>2.0</default>
+    </key>
+    <key name="target-minute" type="d">
+      <default>2.0</default>
+    </key>
+    <key name="target-second" type="d">
+      <default>2.0</default>
+    </key>
+    <key name="target-year" type="d">
+      <default>2022</default>
+    </key>
+    <key name="target-month" type="d">
+      <default>1</default>
+    </key>
+    <key name="target-day" type="d">
+      <default>1</default>
+    </key>
   </schema>
 </schemalist>

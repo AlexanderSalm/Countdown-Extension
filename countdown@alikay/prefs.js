@@ -28,6 +28,67 @@ function fillPreferencesWindow(window) {
 
     });
     settings.bind('text', text, 'text', Gio.SettingsBindFlags.DEFAULT);
+    
+//------------------------------------------------------------    
+    
+    const dateSelectGroup = new Adw.PreferencesGroup();
+    page.add(dateSelectGroup);
+
+    // Create a new preferences row
+    const dateRow = new Adw.ActionRow({ title: 'Date' });
+    dateSelectGroup.add(dateRow);
+
+    // Create the switch and bind its value to the `show-indicator` key
+    const dateSelector = new Gtk.Calendar({
+        
+        valign: Gtk.Align.CENTER,
+    });
+    settings.bind( 'target-year',  dateSelector, 'year', Gio.SettingsBindFlags.DEFAULT);
+    settings.bind( 'target-month', dateSelector, 'month', Gio.SettingsBindFlags.DEFAULT);
+    settings.bind( 'target-day',   dateSelector, 'day', Gio.SettingsBindFlags.DEFAULT);
+    
+    //Create a hour spinner
+    const hourRow = new Adw.ActionRow({ title: 'Hour' });
+    dateSelectGroup.add(hourRow);
+
+    const hourSpinner = new Gtk.SpinButton({
+        adjustment: new Gtk.Adjustment({
+            lower: 0,
+            upper: 23,
+            step_increment: 1
+        })
+    });
+    
+    settings.bind('target-hour', hourSpinner, 'value', Gio.SettingsBindFlags.DEFAULT);
+    
+    //Create a minute spinner
+    const minuteRow = new Adw.ActionRow({ title: 'Minute' });
+    dateSelectGroup.add(minuteRow);
+
+    const minuteSpinner = new Gtk.SpinButton({
+        adjustment: new Gtk.Adjustment({
+            lower: 0,
+            upper: 59,
+            step_increment: 1
+        })
+    });
+    
+    settings.bind('target-minute', minuteSpinner, 'value', Gio.SettingsBindFlags.DEFAULT);
+    
+    //Create a second spinner
+    const secondRow = new Adw.ActionRow({ title: 'Second' });
+    dateSelectGroup.add(secondRow);
+
+    const secondSpinner = new Gtk.SpinButton({
+        adjustment: new Gtk.Adjustment({
+            lower: 0,
+            upper: 59,
+            step_increment: 1
+        })
+    });
+    
+    settings.bind('target-second', secondSpinner, 'value', Gio.SettingsBindFlags.DEFAULT);
+    
 
     //------------------------------------------------------
     
@@ -49,8 +110,8 @@ function fillPreferencesWindow(window) {
     
     settings.bind('update-frequency', updateFrequency, 'value', Gio.SettingsBindFlags.DEFAULT);
 
+
     //------------------------------------------------------------
-    
     
     const group1 = new Adw.PreferencesGroup();
     page.add(group1);
@@ -138,6 +199,22 @@ function fillPreferencesWindow(window) {
     //Add the entry to the row
     row0.add_suffix(text);
     row0.activatable_widget = text;
+    
+    //Add the date selector
+    dateRow.add_suffix(dateSelector);
+    dateRow.activatable_widget = dateSelector;
+    
+    //Add the hour selector
+    hourRow.add_suffix(hourSpinner);
+    hourRow.activatable_widget = hourSpinner;
+    
+    //Add the minute selector
+    minuteRow.add_suffix(minuteSpinner);
+    minuteRow.activatable_widget = minuteSpinner;
+    
+    //Add the second selector
+    secondRow.add_suffix(secondSpinner);
+    secondRow.activatable_widget = secondSpinner;
     
     //Add the time spinner to the row
     updateTimeRow.add_suffix(updateFrequency);
