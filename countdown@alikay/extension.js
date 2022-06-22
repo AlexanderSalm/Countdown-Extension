@@ -7,6 +7,8 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 const Util = imports.misc.util;
+const Glib = imports.gi.GLib;
+const Mainloop = imports.mainloop;
 
 
 class Extension {
@@ -16,6 +18,7 @@ class Extension {
         this.text = null;
         this.time = null;
         this.settings = null;
+        this.timeout = null;
     }
     
     enable() {
@@ -32,13 +35,6 @@ class Extension {
 
         let indicatorName = `${Me.metadata.name} Indicator`;
         
-        /*
-        this.button = new St.Bin({
-            style_class : "panel-button",
-        });
-
-        
-        */
         
         // Create a panel button
         this.button = new PanelMenu.Button(0.0, "Countdown!", false);
@@ -64,39 +60,41 @@ class Extension {
             Gio.SettingsBindFlags.DEFAULT
         );
         
-        // Add an icon
-        //let icon = new St.Icon({
-        //    gicon: new Gio.ThemedIcon({name: 'face-laugh-symbolic'}),
-        //    style_class: 'system-status-icon'
-        //});
-        //this._indicator.add_child(icon);
-
-        // Bind our indicator visibility to the GSettings value
-        //
-        // NOTE: Binding properties only works with GProperties (properties
-        // registered on a GObject class), not native JavaScript properties
-        //this.settings.bind(
-        //    'show-indicator',
-        //    this._indicator,
-        //    'visible',
-        //    Gio.SettingsBindFlags.DEFAULT
-        //);
-        
 
         Main.panel.addToStatusArea(indicatorName, this.button);
 
         //Main.panel._rightBox.insert_child_at_index(this.button, 0);
+        
+        //register the update loop
+        this.timeout = Mainloop.timeout_add_seconds(2.5, () => {
+          // this function will be called every 2.5 seconds
+          this.update();
+          
+        });
+        
     }
     
     disable() {
         log(`disabling ${Me.metadata.name}`);
 
         this.text.destroy();
-        this.button.destroy();
         this.time.destroy();
+        this.indicators.destroy();
+        this.button.destroy();
         this.button = null;
         this.time = null;
         this.text = null;
+        this.indicators = null;
+        Mainloop.source_remove(this.timeout);
+        this.timeout = null;
+    }
+    
+    update(){
+        this.timeout = Mainloop.timeout_add_seconds(2.5, this.update.bind(this));
+        log("Update");
+        let now = Glib.DateTime.new_now_local();
+        let nowString = now.format("%Y-%m-%d %H:%M:%S");
+        this.time.text = nowString;
     }
     
     //Called when the countdown button is pressed
