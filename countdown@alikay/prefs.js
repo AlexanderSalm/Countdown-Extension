@@ -29,6 +29,16 @@ function fillPreferencesWindow(window) {
     });
     settings.bind('text', text, 'text', Gio.SettingsBindFlags.DEFAULT);
     
+    //Create a separator field
+    const sepRow = new Adw.ActionRow({ title: 'Separator' });
+    group0.add(sepRow);
+
+    //Create text entry field
+    const sepText = new Gtk.Entry({
+
+    });
+    settings.bind('sep', sepText, 'text', Gio.SettingsBindFlags.DEFAULT);
+    
 //------------------------------------------------------------    
     
     const dateSelectGroup = new Adw.PreferencesGroup();
@@ -222,6 +232,10 @@ function fillPreferencesWindow(window) {
     //Add the entry to the row
     row0.add_suffix(text);
     row0.activatable_widget = text;
+    
+    //Add the entry to the row
+    sepRow.add_suffix(sepText);
+    sepRow.activatable_widget = sepText;
     
     //Add the date selector
     dateRow.add_suffix(dateSelector);

@@ -78,6 +78,12 @@ class Extension {
             Gio.SettingsBindFlags.DEFAULT
         );
         
+        this.settings.bind(
+            'sep',
+            this.separator,
+            'text',
+            Gio.SettingsBindFlags.DEFAULT
+        );        
 
         Main.panel.addToStatusArea(indicatorName, this.button);
 

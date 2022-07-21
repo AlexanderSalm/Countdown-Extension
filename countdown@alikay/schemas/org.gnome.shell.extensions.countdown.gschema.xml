@@ -20,6 +20,9 @@
     <key name="text" type="s">
       <default>"Countdown"</default>
     </key>
+    <key name="sep" type="s">
+      <default>": "</default>
+    </key>
     <key name="expand-text" type="b">
       <default>false</default>
     </key>
