@@ -18,6 +18,8 @@ class Extension {
         this.time = null;
         this.settings = null;
         this.timeout = null;
+        this.separator = null
+        this.notified = false;
     }
     
     enable() {
@@ -53,8 +55,18 @@ class Extension {
             text : "TIME",
             y_align: Clutter.ActorAlign.CENTER,
         });
+        this.separator = new St.Label({
+            text : ": ",
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        this.time = new St.Label({
+            text : "TIME",
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        
         this.button.add_child(this.indicators);
         this.indicators.add_child(this.text);
+        this.indicators.add_child(this.separator);
         this.indicators.add_child(this.time);
         
         this.button.connect("button-press-event", this.onClick.bind(this));
@@ -86,6 +98,8 @@ class Extension {
         this.time = null;
         this.text = null;
         this.indicators = null;
+        this.separator = null;
+        this.notified = false
         Mainloop.source_remove(this.timeout);
         this.timeout = null;
     }
@@ -174,6 +188,13 @@ class Extension {
         //Check if the time is up
         if (initTime <= 0){
             ret = ret + "⏰"
+            if (this.notified == false){
+                Main.notify("Countdown", "Your countdown: \"" + this.settings.get_string('text') + "\" has finished!")
+                this.notified = true
+            }
+        }
+        else{
+            this.notified = false
         }
         
         return ret;
