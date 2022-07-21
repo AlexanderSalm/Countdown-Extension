@@ -116,6 +116,7 @@ function fillPreferencesWindow(window) {
     const group1 = new Adw.PreferencesGroup();
     page.add(group1);
 
+    /*
     // Create a new preferences row
     const row1 = new Adw.ActionRow({ title: 'Show Milliseconds' });
     group1.add(row1);
@@ -131,7 +132,8 @@ function fillPreferencesWindow(window) {
         'active',
         Gio.SettingsBindFlags.DEFAULT
     );
-
+    */
+    
     // Create a new preferences row
     const row2 = new Adw.ActionRow({ title: 'Show Seconds' });
     group1.add(row2);
@@ -221,8 +223,8 @@ function fillPreferencesWindow(window) {
     updateTimeRow.activatable_widget = updateFrequency;
 
     // Add the switch to the row
-    row1.add_suffix(toggle1);
-    row1.activatable_widget = toggle1;
+    //row1.add_suffix(toggle1);
+    //row1.activatable_widget = toggle1;
 
     // Add the switch to the row
     row2.add_suffix(toggle2);

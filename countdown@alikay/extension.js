@@ -25,7 +25,6 @@ class Extension {
             'org.gnome.shell.extensions.countdown@alikay');
 
         log(`enabling ${Me.metadata.name}`);
-        log('show-msec: ' + this.settings.get_boolean('show-msec'));
         log('show-sec : ' + this.settings.get_boolean('show-sec'));
         log('show-min : ' + this.settings.get_boolean('show-min'));
         log('show-hour: ' + this.settings.get_boolean('show-hour'));
@@ -113,20 +112,32 @@ class Extension {
     }
     
     ConvertSecToDay(n) {
-        var day = n / (24 * 3600);
-
-        n = n % (24 * 3600);
-        var hour = n / 3600;
-
-        n %= 3600;
-        var minutes = n / 60;
-
-        n %= 60;
-        var seconds = n;
-
-        let ret = (Math.floor(day) + " " + "days " + Math.floor(hour) + " " + "hours "
-                + Math.floor(minutes) + " " + "minutes " +
-                Math.floor(seconds) + " " + "seconds ").toString();
+        let ret = ""
+        
+        if (this.settings.get_boolean('show-days')){
+            var day = n / (24 * 3600);
+            n = n % (24 * 3600);
+            ret = ret + Math.floor(day).toString() + " days "
+        }
+         
+        if (this.settings.get_boolean('show-hour')){
+            var hour = n / 3600;
+            n %= 3600;
+            ret = ret + Math.floor(hour).toString() + " hours "
+        }
+        
+        if (this.settings.get_boolean('show-min')){
+            var minutes = n / 60;
+            n %= 60;
+            ret = ret + Math.floor(minutes).toString() + " minutes "   
+        }
+        
+        if (this.settings.get_boolean('show-sec')){
+            var seconds = n;
+            n %= 1000
+            ret = ret + Math.floor(seconds).toString() + " seconds "
+        }
+        
         return ret;
     }
 }
