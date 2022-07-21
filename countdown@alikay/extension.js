@@ -91,7 +91,7 @@ class Extension {
     }
     
     update(){
-        this.timeout = Mainloop.timeout_add_seconds(this.settings.get_double('update-frequency'), this.update.bind(this));
+        this.timeout = Mainloop.timeout_add_seconds(Math.max(0.1, this.settings.get_double('update-frequency')), this.update.bind(this));
         let now = Glib.DateTime.new_now_local();
         
         const second = this.settings.get_double('target-second');
@@ -113,29 +113,34 @@ class Extension {
     
     ConvertSecToDay(n) {
         let ret = ""
+        let initTime = n
         
         if (this.settings.get_boolean('show-days')){
-            var day = n / (24 * 3600);
+            var day = Math.floor(n / (24 * 3600));
             n = n % (24 * 3600);
-            ret = ret + Math.floor(day).toString() + " days "
+            if (day > 0) ret = ret + day.toString() + " days "
         }
          
         if (this.settings.get_boolean('show-hour')){
-            var hour = n / 3600;
+            var hour = Math.floor(n / 3600);
             n %= 3600;
-            ret = ret + Math.floor(hour).toString() + " hours "
+            if (hour > 0) ret = ret + hour.toString() + " hours "
         }
         
         if (this.settings.get_boolean('show-min')){
-            var minutes = n / 60;
+            var minutes = Math.floor(n / 60);
             n %= 60;
-            ret = ret + Math.floor(minutes).toString() + " minutes "   
+            if (minutes > 0) ret = ret + minutes.toString() + " minutes "   
         }
         
         if (this.settings.get_boolean('show-sec')){
-            var seconds = n;
+            var seconds = Math.floor(n);
             n %= 1000
-            ret = ret + Math.floor(seconds).toString() + " seconds "
+            if (seconds > 0) ret = ret + seconds.toString() + " seconds"
+        }
+        
+        if (initTime <= 0){
+            ret = ret + "⏰"
         }
         
         return ret;
