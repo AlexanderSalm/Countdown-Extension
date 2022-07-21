@@ -116,42 +116,62 @@ class Extension {
         let initTime = n
         let first = n >= 0
         
+        //Time identifier variables
+        let dayString = "d, "
+        let minString = "m, "
+        let hourString = "h, "
+        let secString = "s"
+        
+        
+        //Check if using condensed time identifiers or not
+        if (this.settings.get_boolean("expand-text")){
+            dayString = " days, "
+            minString = " minutes, "
+            hourString = " hours, "
+            secString = " seconds"
+        }
+        
+        //Cascading time calculation - days
         if (this.settings.get_boolean('show-days')){
             var day = Math.floor(n / (24 * 3600));
             n = n % (24 * 3600);
             if (day > 0 || !first){
-                ret = ret + day.toString() + " days "
+                ret = ret + day.toString() + dayString
                 first = false
             }
         }
-         
+        
+        //Cascading time calculation - hours
         if (this.settings.get_boolean('show-hour')){
             var hour = Math.floor(n / 3600);
             n %= 3600;
             if (hour > 0 || !first){
-                ret = ret + hour.toString() + " hours "
+                ret = ret + hour.toString() + hourString
                 first = false
             }
         }
         
+        //Cascading time calculation - minutes
         if (this.settings.get_boolean('show-min')){
             var minutes = Math.floor(n / 60);
             n %= 60;
             if (minutes > 0 || !first){
-                ret = ret + minutes.toString() + " minutes "   
+                ret = ret + minutes.toString() + minString  
                 first = false
             }
         }
         
+        //Cascading time calculation - seconds
         if (this.settings.get_boolean('show-sec')){
             var seconds = Math.floor(n);
             n %= 1000
             if (seconds > 0 || !first){
-                ret = ret + seconds.toString() + " seconds"
+                ret = ret + seconds.toString() + secString
                 first = false
             }
         }
         
+        //Check if the time is up
         if (initTime <= 0){
             ret = ret + "⏰"
         }

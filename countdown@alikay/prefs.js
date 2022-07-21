@@ -109,6 +109,27 @@ function fillPreferencesWindow(window) {
     });
     
     settings.bind('update-frequency', updateFrequency, 'value', Gio.SettingsBindFlags.DEFAULT);
+    
+    //------------------------------------------------------
+    
+    const expandGroup = new Adw.PreferencesGroup();
+    page.add(expandGroup);
+
+    //Create a text entry field
+    const expandRow = new Adw.ActionRow({ title: 'Expand time identifiers to full words' });
+    expandGroup.add(expandRow);
+
+    // Create the switch and bind its value to the `show-indicator` key
+    const expandToggle = new Gtk.Switch({
+        active: settings.get_boolean ('expand-text'),
+        valign: Gtk.Align.CENTER,
+    });
+    settings.bind(
+        'expand-text',
+        expandToggle,
+        'active',
+        Gio.SettingsBindFlags.DEFAULT
+    );
 
 
     //------------------------------------------------------------
@@ -221,6 +242,10 @@ function fillPreferencesWindow(window) {
     //Add the time spinner to the row
     updateTimeRow.add_suffix(updateFrequency);
     updateTimeRow.activatable_widget = updateFrequency;
+    
+    //Add the expand toggle to the row
+    expandRow.add_suffix(expandToggle);
+    expandRow.activatable_widget = expandToggle;
 
     // Add the switch to the row
     //row1.add_suffix(toggle1);

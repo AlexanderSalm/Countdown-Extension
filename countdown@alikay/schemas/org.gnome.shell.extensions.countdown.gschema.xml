@@ -6,10 +6,10 @@
       <default>false</default>
     </key>
     <key name="show-sec" type="b">
-      <default>false</default>
+      <default>true</default>
     </key>
     <key name="show-min" type="b">
-      <default>false</default>
+      <default>true</default>
     </key>
     <key name="show-hour" type="b">
       <default>true</default>
@@ -20,18 +20,21 @@
     <key name="text" type="s">
       <default>"Countdown"</default>
     </key>
+    <key name="expand-text" type="b">
+      <default>false</default>
+    </key>
     <key name="update-frequency" type="d">
-      <default>2.0</default>
+      <default>1.0</default>
     </key>
     
     <key name="target-hour" type="d">
-      <default>2.0</default>
+      <default>0.0</default>
     </key>
     <key name="target-minute" type="d">
-      <default>2.0</default>
+      <default>0.0</default>
     </key>
     <key name="target-second" type="d">
-      <default>2.0</default>
+      <default>0.0</default>
     </key>
     <key name="target-year" type="d">
       <default>2022</default>
