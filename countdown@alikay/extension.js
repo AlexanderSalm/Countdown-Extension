@@ -114,29 +114,42 @@ class Extension {
     ConvertSecToDay(n) {
         let ret = ""
         let initTime = n
+        let first = n >= 0
         
         if (this.settings.get_boolean('show-days')){
             var day = Math.floor(n / (24 * 3600));
             n = n % (24 * 3600);
-            if (day > 0) ret = ret + day.toString() + " days "
+            if (day > 0 || !first){
+                ret = ret + day.toString() + " days "
+                first = false
+            }
         }
          
         if (this.settings.get_boolean('show-hour')){
             var hour = Math.floor(n / 3600);
             n %= 3600;
-            if (hour > 0) ret = ret + hour.toString() + " hours "
+            if (hour > 0 || !first){
+                ret = ret + hour.toString() + " hours "
+                first = false
+            }
         }
         
         if (this.settings.get_boolean('show-min')){
             var minutes = Math.floor(n / 60);
             n %= 60;
-            if (minutes > 0) ret = ret + minutes.toString() + " minutes "   
+            if (minutes > 0 || !first){
+                ret = ret + minutes.toString() + " minutes "   
+                first = false
+            }
         }
         
         if (this.settings.get_boolean('show-sec')){
             var seconds = Math.floor(n);
             n %= 1000
-            if (seconds > 0) ret = ret + seconds.toString() + " seconds"
+            if (seconds > 0 || !first){
+                ret = ret + seconds.toString() + " seconds"
+                first = false
+            }
         }
         
         if (initTime <= 0){
