@@ -228,6 +228,30 @@ function fillPreferencesWindow(window) {
         'active',
         Gio.SettingsBindFlags.DEFAULT
     );
+    
+    //------------------------------------------------------
+    
+    const notificationGroup = new Adw.PreferencesGroup();
+    page.add(notificationGroup);
+
+    //Create a text entry field
+    const notificationRow = new Adw.ActionRow({ title: 'Send notification when countdown ends' });
+    notificationGroup.add(notificationRow);
+
+    // Create the switch and bind its value to the `show-indicator` key
+    const notificationToggle = new Gtk.Switch({
+        active: settings.get_boolean ('notif'),
+        valign: Gtk.Align.CENTER,
+    });
+    settings.bind(
+        'notif',
+        notificationToggle,
+        'active',
+        Gio.SettingsBindFlags.DEFAULT
+    );
+
+
+    //------------------------------------------------------------
 
     //Add the entry to the row
     row0.add_suffix(text);
@@ -280,6 +304,9 @@ function fillPreferencesWindow(window) {
     // Add the switch to the row
     row5.add_suffix(toggle5);
     row5.activatable_widget = toggle5;
+    
+    notificationRow.add_suffix(notificationToggle);
+    notificationRow.activatable_widget = notificationToggle;
 
     // Add our page to the window
     window.add(page);

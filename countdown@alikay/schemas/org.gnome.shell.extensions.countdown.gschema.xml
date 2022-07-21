@@ -48,5 +48,8 @@
     <key name="target-day" type="d">
       <default>1</default>
     </key>
+    <key name="notif" type="b">
+      <default>true</default>
+    </key>
   </schema>
 </schemalist>

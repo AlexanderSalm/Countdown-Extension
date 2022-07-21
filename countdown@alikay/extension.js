@@ -194,7 +194,7 @@ class Extension {
         //Check if the time is up
         if (initTime <= 0){
             ret = ret + "⏰"
-            if (this.notified == false){
+            if (this.notified == false && this.settings.get_boolean('notif')){
                 Main.notify("Countdown", "Your countdown: \"" + this.settings.get_string('text') + "\" has finished!")
                 this.notified = true
             }
