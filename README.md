@@ -4,4 +4,4 @@ This extension adds a countdown timer to the GNOME Shell top panel. This extensi
 
 ## Installation
 
-Download to zip file "countdown@alikay" from the latest releases tab. Extract this zip file into ~/.local/share/gnome-shell/extensions/ .
+Download the zip file "countdown@alikay" from the latest releases tab. Extract this zip file into ~/.local/share/gnome-shell/extensions/ .
